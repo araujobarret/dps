@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+ <session-factory>
+  <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+  <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+  <property name="hibernate.connection.url">jdbc:mysql://localhost/lojaufscar</property>
+  <property name="hibernate.connection.password"></property>
+  <property name="hibernate.connection.username">root</property>
+  
+  <mapping class="model.beans.Funcionario"/>
+  <mapping class="model.beans.Cliente"/>
+  <mapping class="model.beans.Endereco"/>
+  <mapping class="model.beans.Categoria"/>
+  <mapping class="model.beans.Produto"/>
+  <mapping class="model.beans.Pedido"/>
+  <mapping class="model.beans.PedidoProduto"/>
+  <mapping class="model.beans.FormaPagamento"/>
+ </session-factory>
+</hibernate-configuration>
