@@ -22,9 +22,9 @@
 			categoria.setId(Integer.parseInt(request.getParameter("categoria_id")));
 			controller.votarCategoria(Integer.parseInt(request.getParameter("categoria_id")), response);
 			cookies = controller.getCookies();
-			for(i = 0; i < cookies.size();i++) {
+			/*for(i = 0; i < cookies.size();i++) {
 				response.addCookie(cookies.get(i));
-			}
+			}*/
 			produtos = lista.retrieveProdutosCategoria(categoria);
 		}
 		else

@@ -148,8 +148,8 @@ public class controllerCookies {
 			
 			//Array para preencher o array de cookies
 			for(i = 0; i < cookies.size();i++) {
-				cookie = cookies.get(i);				
-				responseJsp.addCookie(cookie);
+				//cookie = cookies.get(i);				
+				//responseJsp.addCookie(cookie);
 			}
 			
 			return true;
