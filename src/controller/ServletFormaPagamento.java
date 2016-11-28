@@ -32,16 +32,16 @@ public class ServletFormaPagamento extends HttpServlet {
     	    throws ServletException, IOException, NoSuchAlgorithmException
     {
         response.setContentType("text/html;charset=UTF-8");
-        String mensagem = "?mensagem="; // Mensagem devolvida ao JSP do formulário de formas de pagamento 	            	           	        
+        String mensagem = "?mensagem="; // Mensagem devolvida ao JSP do formulï¿½rio de formas de pagamento 	            	           	        
         try
         {
         	FormaPagamento formaPagamento = new FormaPagamento();
         	FormaPagamentoDAO formaPagamentoDAO = MySQLLojaUfscarDAOFactory.getFormaPagamentoDAO();
         	
-        	//Obtém os valores digitados nos campos do formulário          
+        	//Obtï¿½m os valores digitados nos campos do formulï¿½rio          
             String descricao = request.getParameter("descricao");
             
-            // verifica se não existem dados vazios 
+            // verifica se nï¿½o existem dados vazios 
             if(descricao != null && !descricao.equals("") && request.getParameter("id") != null && !request.getParameter("id").equals(""))
             {            	
             	formaPagamento.setId(Integer.parseInt(request.getParameter("id")));
@@ -60,15 +60,16 @@ public class ServletFormaPagamento extends HttpServlet {
             }
             else
             {
-            	// Se receber somente a descrição considera-se uma nova inserção de Forma de Pagamento
+            	// Se receber somente a descriÃ§Ã£oo considera-se uma nova inserÃ§Ã£o de Forma de Pagamento
         		if(descricao != null && !descricao.equals(""))
         		{
+        			formaPagamento.setDescricao(descricao);
         			formaPagamentoDAO.save(formaPagamento);
         			mensagem += "<span class=\"col-md-5 col-md-offset-1 alert alert-success\">Forma de pagamento salva com sucesso</span>" ;           				
         			
         		}
         		else
-        			mensagem += "<span class=\"col-md-5 col-md-offset-1 alert alert-danger\">Os campos não podem estar vazios!</span>";
+        			mensagem += "<span class=\"col-md-5 col-md-offset-1 alert alert-danger\">Os campos nï¿½o podem estar vazios!</span>";
             }
             request.setAttribute("mensagem", mensagem);
         	request.getRequestDispatcher("forma_pagamento.jsp" + mensagem).forward(request, response);

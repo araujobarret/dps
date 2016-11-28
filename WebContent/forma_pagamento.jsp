@@ -64,21 +64,21 @@
 								<tbody>
 									<%
 										int i;
-											String estado;
-											FormaPagamento formaPagamento;
-											FormaPagamentoDAO formaPagamentoDAO = MySQLLojaUfscarDAOFactory.getFormaPagamentoDAO();
+										String estado;
+										FormaPagamento formaPagamento;
+										FormaPagamentoDAO formaPagamentoDAO = MySQLLojaUfscarDAOFactory.getFormaPagamentoDAO();
 
-											List<FormaPagamento> formas = formaPagamentoDAO.retrieveList();
-											for (i = 0; i < formas.size(); i++) {
-												formaPagamento = formas.get(i);
-												// Checa se recebeu parâmetro de exclusão da forma de pagamento
-												if (request.getParameter("id") != null) {
-													if (formaPagamento.getId() == Integer.parseInt(request.getParameter("id"))) {
-														formaPagamento.setId(Integer.parseInt(request.getParameter("id")));
-														// Exclui a forma de pagamento
-														formaPagamentoDAO.delete(formaPagamento.getId());
-													}
+										List<FormaPagamento> formas = formaPagamentoDAO.retrieveList();
+										for (i = 0; i < formas.size(); i++) {
+											formaPagamento = formas.get(i);
+											// Checa se recebeu parâmetro de exclusão da forma de pagamento
+											if (request.getParameter("id") != null) {
+												if (formaPagamento.getId() == Integer.parseInt(request.getParameter("id"))) {
+													formaPagamento.setId(Integer.parseInt(request.getParameter("id")));
+													// Exclui a forma de pagamento
+													formaPagamentoDAO.delete(formaPagamento.getId());
 												}
+											}
 									%>
 									<tr>
 										<td><%=formaPagamento.getId()%></td>

@@ -75,4 +75,8 @@ public class MySQLLojaUfscarDAOFactory {
 		return new MySQLPedidoProdutoDAO();
 	}
 	
+	public static ProdutosDestaqueDAO getProdutosDestaqueDAO(){
+		return new MySQLProdutosDestaqueDAO();
+	}
+	
 }

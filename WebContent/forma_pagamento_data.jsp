@@ -47,11 +47,11 @@
 							</div>
 							<%
 								String descricao = "";
-									if (request.getParameter("id") != null) {
-										FormaPagamentoDAO formaPagamentoDAO = MySQLLojaUfscarDAOFactory.getFormaPagamentoDAO();
-										FormaPagamento formaPagamento;
-										formaPagamento = formaPagamentoDAO.retrieve(Integer.parseInt(request.getParameter("id")));
-										descricao = formaPagamento.getDescricao();
+								if (request.getParameter("id") != null) {
+									FormaPagamentoDAO formaPagamentoDAO = MySQLLojaUfscarDAOFactory.getFormaPagamentoDAO();
+									FormaPagamento formaPagamento;
+									formaPagamento = formaPagamentoDAO.retrieve(Integer.parseInt(request.getParameter("id")));
+									descricao = formaPagamento.getDescricao();
 							%>
 							<div class="form-group">
 								<label class="control-label col-md-2" for="nome">Id</label>
@@ -62,7 +62,15 @@
 							</div>
 							<%
 								}
+								else {
 							%>
+							<div class="form-group">
+								<label class="control-label col-md-2" for="nome">Id</label>
+								<div class="col-md-4">
+									<input type="text" id="disabledInput" class="form-control" disabled name="id" value="" />
+								</div>
+							</div>
+							<% } %>
 							<div class="form-group">
 								<label class="control-label col-md-2" for="descricao">Descrição:
 								</label>

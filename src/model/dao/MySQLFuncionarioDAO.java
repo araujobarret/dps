@@ -31,7 +31,7 @@ public class MySQLFuncionarioDAO implements FuncionarioDAO {
 		}
 		catch(HibernateException ex){
 			ex.printStackTrace();
-			tx.rollback(); // Desfaz a operação de inserção
+			tx.rollback(); // Desfaz a operaï¿½ï¿½o de inserï¿½ï¿½o
 		}
 		finally{
 			session.close();
@@ -42,7 +42,7 @@ public class MySQLFuncionarioDAO implements FuncionarioDAO {
 	
 	public Funcionario retrieve(Funcionario login) throws Exception {
 		if(login == null)
-			throw new Exception("O parâmetro é nulo");
+			throw new Exception("O parÃ¢metro Ã© nulo");
 
 		session = MySQLLojaUfscarDAOFactory.getInstance();
 	    Query q = session.createQuery("select u from Funcionario u where u.senha = ? and u.login = ?");
