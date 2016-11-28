@@ -18,6 +18,13 @@
         <script src="js/jquery-2.2.4.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <title>LojaUfscar</title>
+        
+        <style>
+        .panel-footer a{
+        align: right;
+        }
+        
+        </style>
     </head>
     <body>
         <div class="container-fluid">
@@ -33,23 +40,49 @@
                         <form name="form" action="ServletLoginCliente" method="POST" accept-charset="iso-8859-1,utf-8">
                         	<input type="hidden" name="comprar" value="<%=comprar%>"/>
                         		<div class="form-group">
-                        			<% if(request.getParameter("mensagem") != null) { %>
-                        				<%= "<span class=\"alert alert-danger\">" %>
-                        				<%= request.getParameter("mensagem") %>
-                        				<%= "</span>" %>
+                        			<% if(request.getParameter("mensagem") != null) {
+                        				String mensagemRetorno = "";
+                        				
+                        				if(request.getParameter("mensagem").equals("cod1"))
+                        					mensagemRetorno = "Usuário e/ou senha inválidos";
+                        				else if(request.getParameter("mensagem").equals("cod2"))
+                        					mensagemRetorno = "Erro ao efetuar o login!";
+                        				else if(request.getParameter("mensagem").equals("cod3"))
+                        					mensagemRetorno = "É necessário fornecer o cpf e a senha.";
+                        				else if(request.getParameter("mensagem").equals("cod5"))
+                        					mensagemRetorno = "É necessário fazer o login para finalizar a compra";
+                        				else 
+                        					mensagemRetorno = "É necessário fazer o login para acessar esta área.";
+                        				%>
+                        				
+                        				<span class="alert alert-danger">
+                        				<%= mensagemRetorno%>
+                        				</span>
                         			<% } %>
                         		</div>
+                        	<br>	
                             <div class="form-group">
-                                <label for="login">Cpf</label>    
-                                <input type="text" class="form-control" name="cpf"/>
+                                <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF">
                             </div>
                             <div class="form-group">
-                                <label for="senha">Senha</label>    
-                                <input type="password" class="form-control" name="senha"/>
+                                <input type="password" class="form-control" name="senha" id="senha" placeholder="Senha"/>
                             </div>
-                            <button type="submit" class="btn btn-default" onClick="this.form.submit()">Entrar</button>
+                            
+                            <button type="submit" class="btn btn-primary" onClick="this.form.submit()">Entrar</button>
                         </form>
+                        
+                        <div class="pull-right">
+									 Novo usuário?
+							            	<a href="cadastro_cliente.jsp" class="btn btn-primary">Cadastrar-se</a>
+									
+								</div>
+                        
+                        
                       </div>
+                      
+								
+								
+					  
                     </div>
                 </div>
             </section>
@@ -59,6 +92,6 @@
 <%
 	}
 	else
-		response.sendRedirect("minhaconta.jsp");
+		response.sendRedirect("index.jsp");
 %>
             

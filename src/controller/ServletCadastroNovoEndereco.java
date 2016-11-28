@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -62,7 +61,7 @@ public class ServletCadastroNovoEndereco extends HttpServlet {
       	  	String cep = request.getParameter("cep");
 
          
-          //Verifica se n�o h� atributos com null ou vazios
+          //Verifica se existem atributos com null ou vazios
           if( descricao != null && !descricao.equals("")
     	    	  && logradouro != null && !logradouro.equals("")
     	    	  && numero != null && !numero.equals("")
@@ -90,24 +89,24 @@ public class ServletCadastroNovoEndereco extends HttpServlet {
         		                    
                   if(enderecoDAO.save(endereco))  //Tenta gravar os dados no banco de dados. Se retornar true ent�o o cadastro ocorreu com sucesso
                   {
-                	 mensagem += "Endereço cadastrado com sucesso.";                	 
+                	 mensagem += "cod1";                	 
                   }
                   else
                   {
-                	 mensagem += "Erro ao cadastrar o endereço.";
+                	 mensagem += "cod3";
                   }
-                  response.sendRedirect("minhaconta.jsp" + mensagem);
+                  response.sendRedirect("enderecos.jsp" + mensagem);
             }
             catch (Exception ex)
         	{
-            	mensagem += "Erro ao cadastrar o endereço. " + ex.getMessage();
-            	response.sendRedirect("minhaconta.jsp" + mensagem);
+            	mensagem += "Erro: " + ex.getMessage();
+            	response.sendRedirect("enderecos.jsp" + mensagem);
             }
           }          
           else
           {
-        	mensagem += "Todos os campos devem ser preenchidos";
-          	response.sendRedirect("minhaconta.jsp" + mensagem);
+        	mensagem += "cod4";
+          	response.sendRedirect("enderecos.jsp" + mensagem);
           }         
         } 
         finally

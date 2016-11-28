@@ -42,12 +42,29 @@ public class MySQLClienteDAO implements ClienteDAO {
 
 	public Cliente retrieve(Cliente login) throws Exception {
 		if(login == null)
-			throw new Exception("O par√¢metro √© nulo");
+			throw new Exception("O par‚metro È nulo");
 
 		session = MySQLLojaUfscarDAOFactory.getInstance();
 	    Query q = session.createQuery("select u from Cliente u where u.senha = ? and u.cpf = ?");
 	    q.setString(0, login.getSenha());
 	    q.setInteger(1, login.getCpf());
+	    
+	    List<?> l = q.list();
+	    if (!l.isEmpty()){
+	    	Cliente cliente = (Cliente)l.get(0);
+	        return cliente;
+	    }
+	    return null;
+	}
+
+	@Override
+	public Cliente retrieveCPF(String cpf) throws Exception {
+		if(cpf == null)
+			throw new Exception("O par‚metro È nulo");
+
+		session = MySQLLojaUfscarDAOFactory.getInstance();
+	    Query q = session.createQuery("select u from Cliente u where u.cpf = ?");
+	    q.setString(0, cpf);
 	    
 	    List<?> l = q.list();
 	    if (!l.isEmpty()){

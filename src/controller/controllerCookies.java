@@ -11,37 +11,160 @@ package controller;
 
 import java.util.ArrayList;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 
 public class controllerCookies {
 	private ArrayList<Cookie>cookies;
 	private ArrayList<int[]>votoProduto;
 	private ArrayList<int[]>votoCategoria;
-	private static final int EXP_TIME = 60*60;	
 	
-	public controllerCookies() {
+	
+	// Construtor para somente ler os cookies e deixar os arraylist's prontos para sua extração
+	public controllerCookies(Cookie[] requestCookies)
+	{
+		cookies = new ArrayList<Cookie>();
 		votoProduto = new ArrayList<int[]>();
 		votoCategoria = new ArrayList<int[]>();
-		
-		// Falta implementar a verificação de cookies já existentes e preencher as variáveis com eles
-		
+		this.lerCookies(requestCookies);
 	}
 	
-	/// Método interno para gravar os cookies a cada operação
-	private boolean gravarCookies() {
-		Cookie produto, categoria;
-		int i, votos[] = new int[2];
+	// Construtor para quando se recebe um voto, nesse caso após a leitura do cookie será necessário
+	// apagar todos para poder atualizar o valor e gravar novamente
+	public controllerCookies(Cookie[] requestCookies, HttpServletResponse responseJsp) {
+		cookies = new ArrayList<Cookie>();
+		votoProduto = new ArrayList<int[]>();
+		votoCategoria = new ArrayList<int[]>();
+
+		this.lerCookies(requestCookies);
 		
-		for(i = 0; i < votoProduto.size(); i++) {
-			votos = votoProduto.get(i);			
-			produto = new Cookie("id_produto" + i, String.valueOf(votos[1]));
-			produto.setMaxAge(60*60);
+		// Após trazer os dados para a memória limpa os cookies para a atualizaão caso for necessário
+		this.limparCookies(requestCookies, responseJsp);
+	}
+	
+	private void lerCookies(Cookie[] requestCookies){
+		int voto[][] = new int[6][2];
+		Cookie cookie;
+		int sliceProduto, sliceCategoria;
+		
+		// Zerar o array temporário dos votos
+		for(int i = 0; i < 6; i++){
+			voto[i][0] = 0;
+			voto[i][1] = 0;
 		}
 		
-		return false;
+		// Falta implementar a verificação de cookies já existentes e preencher as variáveis com eles
+		// Ler os cookies de produtos se existirem
+		if(requestCookies != null){
+			for(int i = 0; i < requestCookies.length; i++){
+				cookie = requestCookies[i];
+				if(cookie.getDomain() != null) {
+					if(cookie.getDomain().equals("localhost.lojaufscar")){
+						// Se o cookie for relacionado com o produto
+						if(cookie.getName().startsWith("produto")){
+							// Pega o final do nome do cookie com o número associado a ele
+							sliceProduto = Integer.parseInt(cookie.getName().substring(cookie.getName().length()-1));
+							if(cookie.getName().contains("voto")) {
+								voto[sliceProduto][1] = Integer.parseInt(cookie.getValue());
+							}
+							else{
+								voto[sliceProduto][0] = Integer.parseInt(cookie.getValue());
+							}					
+						}
+						else {
+							// Considera cookie de voto da categoria
+							if(cookie.getName().equals("categoria"))
+								voto[4][0] = Integer.parseInt(cookie.getValue());
+							else{
+								voto[4][1] = Integer.parseInt(cookie.getValue());
+							}						
+						}					
+					}
+				}
+			}
+			
+			// Escrever os votos nos arrayList dos produtos
+			for(int i = 0; i < 4; i++) {
+				if(voto[i][0] != 0) {
+					votoProduto.add(voto[i]);
+				}					
+			}
+			
+			// Escreve o voto do arraylist da categoria
+			if(voto[4][0] != 0)
+				votoCategoria.add(voto[4]);
+		}
 	}
 	
-	public void votarProduto(int id) {
+	// Método que limpa os cookies existentes previamente para poder atualizar seus valores
+	// Este método só será executado depois da leitura dos cookies a atribuição para os Arrays específicos
+	private boolean limparCookies(Cookie[] requestCookies, HttpServletResponse responseJsp){
+		Cookie cookie;		
+		if(requestCookies != null)
+		{
+			for(int i = 0; i < requestCookies.length; i++) {
+				cookie = requestCookies[i];
+				cookie.setMaxAge(0);
+				responseJsp.addCookie(cookie);
+			}
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	// Método interno para gravar os cookies a cada operação
+	private boolean gravarCookies(HttpServletResponse responseJsp) {
+		Cookie produto, categoria, cookie;
+		int i, votos[] = new int[2];
+		
+		try{				
+			for(i = 0; i < votoProduto.size(); i++) {
+				votos = votoProduto.get(i);			
+				produto = new Cookie("produto" + i, String.valueOf(votos[0]));
+				produto.setDomain("localhost.lojaufscar");
+				produto.setMaxAge(60*60);
+				// Grava o cookie com o valor de sua ID
+				cookies.add(produto);
+				produto = new Cookie("produtoVoto" + i, String.valueOf(votos[1]));
+				produto.setDomain("localhost.lojaufscar");
+				produto.setMaxAge(60*60);
+				// Grava o cookie com o numero de votos referente a gravada ID anteriormente
+				cookies.add(produto);
+			}
+			for(i = 0; i < votoCategoria.size(); i++) {				
+				votos = votoCategoria.get(i);
+				categoria = new Cookie("categoria" + i, String.valueOf(votos[0]));
+				categoria.setDomain("localhost.lojaufscar");
+				categoria.setMaxAge(60*60);				
+				// Grava o cookie com a id da categoria
+				cookies.add(categoria);
+				categoria = new Cookie("categoriaVoto" + i, String.valueOf(votos[1]));
+				categoria.setDomain("localhost.lojaufscar");				
+				categoria.setMaxAge(60*60);
+				// Grava o número de votos para a categoria específica
+				cookies.add(categoria);
+			}
+			
+			//Array para preencher o array de cookies
+			for(i = 0; i < cookies.size();i++) {
+				cookie = cookies.get(i);				
+				responseJsp.addCookie(cookie);
+			}
+			
+			return true;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public ArrayList<Cookie> getCookies() {
+		return cookies;
+	}
+
+	public void votarProduto(int id, int categoriaId, HttpServletResponse responseJsp) {
 		int i = 0, j, idVoto[][] = new int[5][2], temp[];
 		boolean flag;
 		
@@ -94,15 +217,16 @@ public class controllerCookies {
 			else
 				break;
 		
-		//Após tudo grava o arrayList no cookie
-		gravarCookies();
+		//Após tudo grava a categoria do produto e dentro do método votarCategoria aciona a gravação do cookie
+		this.votarCategoria(categoriaId, responseJsp);
 	}
 	
-	public void votarCategoria(int id)	{
+	public void votarCategoria(int id, HttpServletResponse responseJsp)	{
 		int idVoto[][] = new int [3][2];		
-		
+
 		//Checa se já existe alguma categoria votada na classe
 		if(votoCategoria.size() != 0){
+			System.out.println("216 - size:" + votoCategoria.size());
 			// Checa se a categoria em segundo lugar já existe, se não existir e o voto for diferente do primeiro id, 
 			// insere-se na segunda coluna
 			if(votoCategoria.size() > 1) {
@@ -146,8 +270,25 @@ public class controllerCookies {
 				}					
 			}	
 			// Após todos os procedimentos grava as operações nos cookies
-			gravarCookies();
+			gravarCookies(responseJsp);
+		}
+		else {
+			// Caso seja o primeiro voto
+			idVoto[0][0] = id;
+			idVoto[0][1] = 1;
+			votoCategoria.add(idVoto[0]);
+			gravarCookies(responseJsp);
 		}
 	}
 	
+	// Getters e Setters
+	
+	public ArrayList<int[]> getVotoProduto() {
+		return votoProduto;
+	}
+
+	public ArrayList<int[]> getVotoCategoria() {
+		return votoCategoria;
+	}
+		
 }

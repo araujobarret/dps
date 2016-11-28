@@ -4,18 +4,27 @@
 <%@ page import="model.beans.Categoria" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.NumberFormat" %>
+<%@ page import="controller.controllerCookies" %>
 <div class="row row-eq-height">
 	<%
 		int i = 0;
 		Produto produto;
+		controllerCookies controller;		
 		NumberFormat formato = NumberFormat.getCurrencyInstance();
 		ProdutoDAO lista = MySQLLojaUfscarDAOFactory.getProdutoDAO();
 		List<Produto> produtos;
 		// Verifica se foi feita a consulta por categoria
 		if(request.getParameter("categoria_id") != null)
 		{
+			List<Cookie> cookies;
+			controller = new controllerCookies(request.getCookies(), response);
 			Categoria categoria = new Categoria();
 			categoria.setId(Integer.parseInt(request.getParameter("categoria_id")));
+			controller.votarCategoria(Integer.parseInt(request.getParameter("categoria_id")), response);
+			cookies = controller.getCookies();
+			for(i = 0; i < cookies.size();i++) {
+				response.addCookie(cookies.get(i));
+			}
 			produtos = lista.retrieveProdutosCategoria(categoria);
 		}
 		else

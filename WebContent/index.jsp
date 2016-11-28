@@ -13,12 +13,15 @@
             $('.carousel').carousel();
             $('[data-toggle="tooltip"]').tooltip();
           });
+          
         </script>
         <title>LojaUfscar</title>
     </head>
     <body>
         <div class="container-fluid">
-        	<jsp:include page="header.jsp" />           
+            
+            <jsp:include page="header.jsp" />                              
+            	
             <section class="row">
               <jsp:include page="categorias.jsp" />
               

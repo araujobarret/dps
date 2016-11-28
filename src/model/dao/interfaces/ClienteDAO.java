@@ -8,4 +8,6 @@ public interface ClienteDAO {
 	
 	public Cliente retrieve(Cliente cliente) throws Exception;
 	
+	public Cliente retrieveCPF(String cpf) throws Exception;
+	
 }

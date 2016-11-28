@@ -11,6 +11,7 @@ public class ProdutoCarrinho extends Produto
 		super.setId(produto.getId());
 		super.setPreco_venda(produto.getPreco_venda());
 		super.setDescricao(produto.getDescricao());
+		super.setQuantidade_estoque(produto.getQuantidade_estoque());
 	}
 	
 	public int getQuantidade_carrinho()

@@ -2,9 +2,9 @@ package controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.Bidi;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,11 +12,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import model.Carrinho;
-import model.beans.*;
-import model.dao.*;
-import model.dao.interfaces.*;
-import java.util.Date;
+import model.beans.Endereco;
+import model.beans.FormaPagamento;
+import model.beans.Pedido;
+import model.beans.PedidoProduto;
+import model.beans.Produto;
+import model.beans.ProdutoCarrinho;
+import model.dao.MySQLLojaUfscarDAOFactory;
+import model.dao.interfaces.PedidoDAO;
+import model.dao.interfaces.PedidoProdutoDAO;
 
 
 /**
@@ -95,7 +101,7 @@ public class ServletComprar extends HttpServlet {
         				temp.setQuantidade(produtoCarrinho.getQuantidade_carrinho());
         				total = Double.parseDouble(produtoCarrinho.getPreco_venda().toString()) * produtoCarrinho.getQuantidade_carrinho();
         				temp.setValor_total(new BigDecimal(total));
-        				temp.setValor_unitario(produto.getPreco_venda());
+        				//temp.setValor_unitario(produto.getPreco_venda());
         				        				
         				pedidoProdutoDAO = MySQLLojaUfscarDAOFactory.getPedidoProdutoDAO();
         				produto.setId(produtoCarrinho.getId());
@@ -105,7 +111,7 @@ public class ServletComprar extends HttpServlet {
         				
         			}
         			
-        			msg = "Compra efetuada, aguardando confirmação de pagamento.";
+        			msg = "Compra efetuada, aguardando confirmacao de pagamento.";
         			response.sendRedirect("index.jsp?mensagem=" + msg);
         		}
         	}	

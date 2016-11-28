@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.ServletException;
@@ -41,7 +40,7 @@ public class ServletLoginCliente extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     		throws ServletException, IOException, NoSuchAlgorithmException
     {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType ("text/html;charset=UTF-8");
 
         try
         {
@@ -77,17 +76,17 @@ public class ServletLoginCliente extends HttpServlet {
                     	  response.sendRedirect("index.jsp");
                   }
                   else{
-                	  response.sendRedirect("login.jsp?mensagem='Usuário e/ou senha inválidos.'");
+                	  response.sendRedirect("login.jsp?mensagem=cod1");
                   }
                     
             }
             catch (Exception ex){
-            	response.sendRedirect("login.jsp?mensagem='Erro ao efetuar o login!' " + ex.getMessage());
+            	response.sendRedirect("login.jsp?mensagem=cod2" + ex.getMessage());
             }
           }
           
           else{
-        	  response.sendRedirect("login.jsp?mensagem='É necessário fornecer o cpf e a senha.'");
+        	  response.sendRedirect("login.jsp?mensagem=cod3");
           }
         } 
         finally

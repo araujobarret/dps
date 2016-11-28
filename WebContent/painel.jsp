@@ -18,7 +18,7 @@
     </head>
     <body>
         <div class="container-fluid">
-            <jsp:include page="header.jsp" />
+            <jsp:include page="header_interno.jsp" />
             
             <section class="row">
                 <jsp:include page="menu_funcionario.jsp" />  

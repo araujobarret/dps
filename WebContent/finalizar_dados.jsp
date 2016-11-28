@@ -10,12 +10,14 @@
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.math.BigDecimal" %>
 
 <%
 	HttpSession sessao = request.getSession();
 	int i = 0;
 	String total;
 	
+	ProdutoCarrinho produto;
 	EnderecoDAO enderecoDAO;
 	List<Endereco> enderecos;
 	Endereco endereco;
@@ -37,7 +39,7 @@
 	
 
 	carrinho.setCliente(cpf);
-	total = formato.format(carrinho.getTotal());
+	
 	sessao.setAttribute("carrinho", carrinho);
 	
 	enderecoDAO = MySQLLojaUfscarDAOFactory.getEnderecoDAO();
@@ -45,10 +47,51 @@
 	
 	formaPagamentoDAO = MySQLLojaUfscarDAOFactory.getFormaPagamentoDAO();
 	formas = formaPagamentoDAO.retrieveList();	
-	
 %>
 <form action="ServletComprar" method="POST" class="form-horizontal">
 	<div class="row">
+	
+		<div class="table-responsive ">
+ 			<table class="table">
+    			<thead>
+    				<tr>
+    					<th>Descrição do produto</th>
+        				<th>Quantidade</th>
+        				<th>Valor unitário</th>
+        				<th>Valor total</th>
+        			</tr>
+    			</thead>
+    			<tbody>
+    			
+    			<%
+    			for(i=0; i< carrinho.size(); i++){
+    				produto = new ProdutoCarrinho();
+    				produto = carrinho.getProduto(i);
+    				
+    				// Busca a quantidade digitada pelo usuário e atualiza o carrinho
+    				produto.setQuantidade_carrinho(Integer.parseInt(request.getParameter("quantidade_row"+i)));
+    				carrinho.alteraItem(i, produto);
+    				
+    			%>
+    				<tr>
+    					<td><%= produto.getDescricao() %>t</td>
+        				<td><%= produto.getQuantidade_carrinho()%></td>
+        				<td><%= produto.getPreco_venda() %></td>
+        				<td><%= produto.getQuantidade_carrinho() * Double.parseDouble(produto.getPreco_venda().toString()) %></td>
+    				</tr>
+    			<%
+    			}
+    			total = formato.format(carrinho.getTotal());
+    			
+    			%>	
+    			</tbody>
+    			
+    	
+    	
+  			</table>
+		</div>
+		
+		<br><br><br>
 		<div class="form-group">
 			<label class="control-label col-md-2" for="endereco"> Endereco: </label>
 			<div class="col-md-4">
@@ -58,7 +101,7 @@
 					{
 						endereco = enderecos.get(i);					
 				%>
-					<option value="<%= endereco.getId() %>"><%= endereco.getDescricao() %></option>
+					<option value="<%= endereco.getId() %>"><%= endereco.getDescricao()%> <%= endereco.getLogradouro() %>, <%= endereco.getNumero() %></option>
 				<% 
 					}
 				%>

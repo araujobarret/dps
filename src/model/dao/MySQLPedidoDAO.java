@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import model.beans.Cliente;
 import model.beans.Pedido;
 import model.dao.interfaces.PedidoDAO;
 
@@ -36,7 +37,7 @@ public class MySQLPedidoDAO implements PedidoDAO {
 		}
 		catch(HibernateException ex){
 			ex.printStackTrace();
-			tx.rollback(); // Desfaz a operaÃ§Ã£o de inserÃ§Ã£o
+			tx.rollback(); //  Desfaz a operação de inserção
 		}
 		finally{
 			session.close();
@@ -67,7 +68,53 @@ public class MySQLPedidoDAO implements PedidoDAO {
 		}
 		catch(HibernateException ex){
 			ex.printStackTrace();
-			tx.rollback(); // Desfaz a operaÃ§Ã£o de inserÃ§Ã£o
+			tx.rollback(); // Desfaz a operação de inserção
+		}
+		finally{
+			session.close();
+		}		
+	}
+
+	@Override
+	public ArrayList<Pedido> retrieveListPeriodo(String data1, String data2) throws Exception {
+		session = MySQLLojaUfscarDAOFactory.getInstance();
+	    	    
+		Query q = session.createQuery("from Pedido where data_pedido >= '" + data1 + "' and data_pedido <= '" + data2 + "'");
+	    
+	    List lista = q.list();
+	    if (!lista.isEmpty()){
+	    	return (ArrayList<Pedido>)lista;
+	    }
+		return null;
+	}
+
+	
+	@Override
+	public ArrayList<Pedido> retrievePedidosCliente(Cliente cliente) throws Exception {
+		session = MySQLLojaUfscarDAOFactory.getInstance();
+	    	    
+		Query q = session.createQuery("from Pedido where cliente_cpf = " + cliente.getCpf() + " order by id desc");
+	    
+	    List<?> lista = q.list();
+	    if (!lista.isEmpty()){
+	    	return (ArrayList<Pedido>)lista;
+	    }
+		return null;
+	}
+
+	@Override
+	public void cancelarPedido(Pedido pedido) throws Exception {
+		session = MySQLLojaUfscarDAOFactory.getInstance();
+		Transaction tx = null;
+				
+		try{
+			tx = session.beginTransaction();
+			session.update(pedido);			
+			tx.commit();
+		}
+		catch(HibernateException ex){
+			ex.printStackTrace();
+			tx.rollback(); // Desfaz a operação de inserção
 		}
 		finally{
 			session.close();

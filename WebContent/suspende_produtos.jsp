@@ -4,7 +4,6 @@
 <%@ page import="model.beans.Produto" %>
 <%@ page import="java.util.List" %>
 
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,32 +14,18 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="ckeditor/ckeditor.js"></script>
         <style>
-        	button{margin-top: 30px;
+        	.btn-suspende{margin-top: 30px;
         	float: right;}
         </style>
         <title>LojaUfscar</title>
     </head>
     <body>
         <div class="container-fluid">
-            <jsp:include page="header.jsp" />
+            <jsp:include page="header_interno.jsp" />
             
             <section class="row">
-                <div class="col-md-2 center">
-                    <nav class="text-center panel panel-primary">
-                        <div class="panel-heading">
-                            <span>Menu</span>
-                        </div>
-                        <div class="panel-body">
-                            <ul class="nav nav-pills nav-stacked">
-                                <li><a href="#">Usuários</a></li>
-                                <li><a href="produtos.html">Produtos</a></li>
-                                <li><a href="#">Pedidos</a></li>
-                                <li><a href="#">Formas de pagamento</a></li>
-                                <li><a href="#">Loja</a></li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
+                <jsp:include page="menu_funcionario.jsp" /> 
+                
                 <div class="col-md-9 center">
                     <div class="row panel panel-primary">
                         <div class="panel-heading">
@@ -54,9 +39,6 @@
                         	<label><%= request.getParameter("mensagem")%></label>
                         	<%} %>
                        </div>
-                        
-                   
-                   
                    
                         <div class="panel-body">
 	                        
@@ -104,7 +86,7 @@
 	  							 
 	  						</div>      
 							
-    							<button type="submit" class="btn btn-danger">Suspender produtos</button>
+    							<button type="submit" class="btn btn-danger btn-suspende">Suspender produtos</button>
     						</form>
 							                        
         <%}%>                

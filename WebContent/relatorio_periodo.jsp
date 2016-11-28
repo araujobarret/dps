@@ -31,28 +31,25 @@
                 <div class="col-md-6 center">
                     <div class="row panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><b>Requisição produtos mais vendidos</b></h3>
+                            <h3 class="panel-title"><b>Requisição produtos por período</b></h3>
                         </div>
                         <div class="panel-body">
-                            <form name="form" action="resultado_mais_vendidos.jsp" method="POST" accept-charset="iso-8859-1,utf-8" class="form-horizontal">
+                            <form name="form" action="resultado_periodo.jsp" method="POST" accept-charset="iso-8859-1,utf-8" class="form-horizontal">
+                                
                                 <div class="form-group">
-                                    <label class="control-label col-md-4" for="quantidade">Mais vendidos:</label>  
+                                    <label class="control-label col-md-4" for="data1">Entre:</label>  
                                     <div class="col-md-2">
-                                        <input type="number" class="form-control" name="quantidade" min="1" value="10" required/>
+                                        <input type="date"  name="data1" required/>
                                     </div>
                                 </div>
-                                
-                                
-                                
                                 <div class="form-group">
-                                    <label class="control-label col-md-4" for="ordem">Ordem</label>  
-                                    <div class="col-md-4">
-                                        <select name="ordem" class="form-control" required>
-                                            <option value="desc" selected>Decrescente</option>
-                                        	<option value="asc">Crescente</option>
-										</select>
+                                    <label class="control-label col-md-4" for="data2">e:</label>  
+                                    <div class="col-md-2">
+                                        <input type="date"  name="data2" required/>
                                     </div>
                                 </div>
+                                
+                                
                                 
                                 <button type="submit" class="pull-right btn btn-default" onClick="this.form.submit()">Gerar relatório</button>
                             </form>

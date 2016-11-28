@@ -38,5 +38,5 @@
 <%
 	}
 	else
-		response.sendRedirect("index.jsp");
+		response.sendRedirect("login.jsp?mensagem=cod5");
 %>

@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.CriptografiaMD5;
 import model.beans.Funcionario;
 import model.dao.MySQLLojaUfscarDAOFactory;
 import model.dao.interfaces.FuncionarioDAO;
-import model.CriptografiaMD5;
 /**
  * Servlet implementation class ServletCadastroFuncionario
  */

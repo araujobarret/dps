@@ -24,7 +24,7 @@
                 <div class="col-md-4 col-md-offset-4 center">
                     <div class="panel panel-default">
                       <div class="panel-heading">
-                        <h3 class="panel-title"><b>Login</b></h3>
+                        <h3 class="panel-title"><b>Login do Funcionário</b></h3>
                       </div>
                       <div class="panel-body">                        
                         <form name="form" action="ServletLoginFuncionario" method="POST" accept-charset="iso-8859-1,utf-8">

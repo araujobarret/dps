@@ -37,7 +37,8 @@
 		produto.setPreco_venda(pesquisa.getPreco_venda());
 		produto.setDescricao(pesquisa.getDescricao());
 		produto.setQuantidade_carrinho(1);
-		carrinho.addItem(produto);
+		produto.setQuantidade_estoque(pesquisa.getQuantidade_estoque());
+		carrinho.addItem(produto);;
 		
 		sessao.setAttribute("carrinho", carrinho);
 	}
@@ -58,16 +59,24 @@
 		<div class="col-md-6 m-x-auto">
 			<b><%= produto.getDescricao() %></b>			
 		</div>
-		<div class="col-md-2"><input type="text" disabled name="quantidade" value="<%=produto.getQuantidade_carrinho()%>"/></div>
-		<div class="col-md-2"><a href="carrinho.jsp?idRemove=<%= i %>">X</a></div>
+		<div class="col-md-2 m-x-auto">
+			<b>R$ <%= produto.getPreco_venda() %></b>			
+		</div>
+		<div class="col-md-1"><input type="number" name="quantidade_row<%=i%>" min="1" max="<%=produto.getQuantidade_estoque()%>" value="<%=produto.getQuantidade_carrinho()%>"/></div>
+		<div class="col-md-1"><a href="carrinho.jsp?idRemove=<%= i %>"><span class="glyphicon glyphicon-remove"></a></div>
 	</div>
 <% 
 		i++;
 	}
 %>	
-	<b>Total: <%= total %></b>
-	<br>
-	<br>
+	
+	<!-- Desativa o botão caso o carrinho esteja vazio -->
+	<%
+		if(carrinho.size() > 0){
+	%>
 	<button onClick="this.submit()" class="btn btn-primary">Finalizar compra</button>&nbsp&nbsp
+	<%
+	}
+	%>
 	<a href="index.jsp" class="btn btn-primary">Continuar comprando</a>
 </form>
