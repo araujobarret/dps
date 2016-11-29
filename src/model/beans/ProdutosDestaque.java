@@ -83,4 +83,15 @@ public class ProdutosDestaque {
 	public void setId_produto4(int id_produto4) {
 		this.id_produto4 = id_produto4;
 	}	
+	
+	public int getId_produtoX(int posicao){
+		switch(posicao){
+			case 1: return this.id_produto1; 
+			case 2: return this.id_produto2; 
+			case 3: return this.id_produto3; 
+			case 4: return this.id_produto4; 
+		}
+		return 0;
+	}
+	
 }

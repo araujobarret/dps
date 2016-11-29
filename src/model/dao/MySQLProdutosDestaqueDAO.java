@@ -14,7 +14,7 @@ import model.dao.interfaces.ProdutosDestaqueDAO;
 public class MySQLProdutosDestaqueDAO implements ProdutosDestaqueDAO {
 	private Session session;
 	
-	// EdiÃ§Ã£o da linha Ãºnica destaque
+	// Edição da linha única destaque
 	@Override
 	public boolean save(ProdutosDestaque destaque) {
 		session = MySQLLojaUfscarDAOFactory.getInstance();
@@ -22,7 +22,7 @@ public class MySQLProdutosDestaqueDAO implements ProdutosDestaqueDAO {
 		
 		try{
 			tx = session.beginTransaction();
-			session.save(destaque);
+			session.update(destaque);
 			tx.commit();
 			return true;
 		}
@@ -42,7 +42,7 @@ public class MySQLProdutosDestaqueDAO implements ProdutosDestaqueDAO {
 	public ProdutosDestaque retrieve(){		
 
 		session = MySQLLojaUfscarDAOFactory.getInstance();
-	    Query q = session.createQuery("select u from ProdutoDestaque LIMIT 1");	    
+	    Query q = session.createQuery("select u from ProdutosDestaque u");	    
 	    
 	    List<?> l = q.list();
 	    if (!l.isEmpty()){

@@ -95,6 +95,7 @@
 									%>
 								</tbody>
 							</table>
+							<a href="forma_pagamento_data.jsp"><button type="submit" class="btn btn-default">Nova Forma de Pagamento</button></a>
 						</div>
 					</div>
 				</div>

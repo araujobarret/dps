@@ -94,8 +94,12 @@ public class Carrinho {
 	// Adiciona Item ao Carrinho
 	public void addItem(ProdutoCarrinho produto)
 	{
-		this.produtos.add(produto);
-		this.atualizaTotal();
+		if(pesquisaItem(produto))
+		{
+			this.produtos.add(produto);
+			this.atualizaTotal();
+		}
+		
 	}
 	
 	// Remove item do carrinho
@@ -124,4 +128,18 @@ public class Carrinho {
 		this.atualizaTotal();
 	}
 	
+	//Confere se o produto já está no carrinho
+	public boolean pesquisaItem(ProdutoCarrinho produto)
+	{
+		for(ProdutoCarrinho pc : produtos)
+		{
+			if(pc.getId() == produto.getId())
+			{
+				return false;
+			}
+				
+		}
+		
+		return true;
+	}
 }

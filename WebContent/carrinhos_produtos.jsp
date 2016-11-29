@@ -57,12 +57,25 @@
 			<a href="produto.jsp?id=<%=produto.getId()%>"><img class="thumbnail" src="img/produtos/<%= produto.getId() + "_mini.jpg" %>" /></a>
 		</div>	
 		<div class="col-md-6 m-x-auto">
-			<b><%= produto.getDescricao() %></b>			
+			<b><%= produto.getDescricao() %></b>
+			<%
+				if(produto.getQuantidade_estoque() == 0){
+			%>
+				<div class="alert alert-danger" role="alert">Produto sem estoque</div>
+			<%
+			}
+			%>			
 		</div>
 		<div class="col-md-2 m-x-auto">
 			<b>R$ <%= produto.getPreco_venda() %></b>			
 		</div>
-		<div class="col-md-1"><input type="number" name="quantidade_row<%=i%>" min="1" max="<%=produto.getQuantidade_estoque()%>" value="<%=produto.getQuantidade_carrinho()%>"/></div>
+			<%
+				if(produto.getQuantidade_estoque() == 0){
+			%>
+				<div class="col-md-1"><input type="number" name="quantidade_row<%=i%>" min="0" max="0" value="0"/></div>
+			<%}else{ %>	
+				<div class="col-md-1"><input type="number" name="quantidade_row<%=i%>" min="1" max="<%=produto.getQuantidade_estoque()%>" value="<%=produto.getQuantidade_carrinho()%>"/></div>
+			<%} %>
 		<div class="col-md-1"><a href="carrinho.jsp?idRemove=<%= i %>"><span class="glyphicon glyphicon-remove"></a></div>
 	</div>
 <% 

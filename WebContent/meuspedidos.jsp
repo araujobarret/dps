@@ -99,23 +99,24 @@ dl dd {
 
 											List<Pedido> pedidos = pedidoDAO.retrievePedidosCliente(cliente);
 
-											for (i = 0; i < pedidos.size(); i++) {
-												pedido = pedidos.get(i);
-												// Checa se recebeu parâmetro de liberação de pedido
-												if (request.getParameter("id") != null) {
-													if (pedido.getId() == Integer.parseInt(request.getParameter("id"))) {
-														pedido.setId(Integer.parseInt(request.getParameter("id")));
-														pedido.setStatus('2');
-														pedidoDAO.cancelarPedido(pedido);
+											if (pedidos != null) {
+												for (i = 0; i < pedidos.size(); i++) {
+													pedido = pedidos.get(i);
+													// Checa se recebeu parâmetro de liberação de pedido
+													if (request.getParameter("id") != null) {
+														if (pedido.getId() == Integer.parseInt(request.getParameter("id"))) {
+															pedido.setId(Integer.parseInt(request.getParameter("id")));
+															pedido.setStatus('2');
+															pedidoDAO.cancelarPedido(pedido);
+														}
 													}
-												}
 
-												if (pedido.getStatus() == '0')
-													estado = "Pendente";
-												else if (pedido.getStatus() == '1')
-													estado = "Entregue";
-												else
-													estado = "Cancelado";
+													if (pedido.getStatus() == '0')
+														estado = "Pendente";
+													else if (pedido.getStatus() == '1')
+														estado = "Entregue";
+													else
+														estado = "Cancelado";
 									%>
 									<tr data-toggle="collapse" data-target="#demo<%=i%>"
 										class="accordion-toggle">
@@ -151,14 +152,14 @@ dl dd {
 														<tbody class="tabela-detalhes-body">
 															<%
 																int j;
-																		PedidoProduto pedidoProduto;
+																			PedidoProduto pedidoProduto;
 
-																		PedidoProdutoDAO pedidoProdutoDAO = MySQLLojaUfscarDAOFactory.getPedidoProdutoDAO();
+																			PedidoProdutoDAO pedidoProdutoDAO = MySQLLojaUfscarDAOFactory.getPedidoProdutoDAO();
 
-																		List<PedidoProduto> pedidosProduto = pedidoProdutoDAO.retrievePedido(pedido);
+																			List<PedidoProduto> pedidosProduto = pedidoProdutoDAO.retrievePedido(pedido);
 
-																		for (j = 0; j < pedidosProduto.size(); j++) {
-																			pedidoProduto = pedidosProduto.get(j);
+																			for (j = 0; j < pedidosProduto.size(); j++) {
+																				pedidoProduto = pedidosProduto.get(j);
 															%>
 
 															<tr>
@@ -178,6 +179,7 @@ dl dd {
 									</tr>
 									<%
 										}
+											}
 									%>
 								</tbody>
 							</table>

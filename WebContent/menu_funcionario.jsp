@@ -8,6 +8,7 @@
 				<li class="cadastro-funcionario"><a
 					href="cadastro_funcionario.jsp">Usuários</a></li>
 				<li class="menu-produto"><a href="menu_produto.jsp">Produtos</a></li>
+				<li class="menu-produto"><a href="produtos_destaque.jsp">Produtos em destaque</a></li>
 				<li class="menu-pedido"><a href="pedidos.jsp">Pedidos</a></li>
 				<li class="menu-relatorio"><a href="relatorios.jsp">Relatórios</a></li>
 				<li class="menu-pagamento"><a href="forma_pagamento.jsp">Formas de pagamento</a></li>
