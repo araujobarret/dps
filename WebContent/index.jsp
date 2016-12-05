@@ -46,6 +46,8 @@
            		     	<%= request.getParameter("mensagem") %>
           	      	<%= "</span>" %>
            	   	  <% } %>
+           	   	  <jsp:include page="caroussel_destaque.jsp" />
+           	   	  <!-- 
            	    	<div id="carousel_destaque" class="carousel slide" data-ride="carousel">
               
                   <ol class="carousel-indicators">
@@ -82,6 +84,7 @@
                     <span class="sr-only">Next</span>
                   </a>
                 </div>
+                -->
                 <br/>
                 <jsp:include page="produtos_inicial.jsp" />
                 </div>

@@ -157,7 +157,7 @@ dl dd {
 																			PedidoProdutoDAO pedidoProdutoDAO = MySQLLojaUfscarDAOFactory.getPedidoProdutoDAO();
 
 																			List<PedidoProduto> pedidosProduto = pedidoProdutoDAO.retrievePedido(pedido);
-
+																		if(pedidosProduto != null) {
 																			for (j = 0; j < pedidosProduto.size(); j++) {
 																				pedidoProduto = pedidosProduto.get(j);
 															%>
@@ -170,6 +170,7 @@ dl dd {
 															</tr>
 															<%
 																}
+															}
 															%>
 														</tbody>
 													</table>
